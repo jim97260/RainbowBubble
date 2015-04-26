@@ -39,7 +39,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-    auto scene = Main::createScene();
+    auto scene = MainScene::createScene();
     director->runWithScene(scene);
 
     return true;

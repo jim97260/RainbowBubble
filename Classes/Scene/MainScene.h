@@ -3,9 +3,10 @@
 
 #include "AllIncludeHeader.h"
 
-class Main : public cocos2d::Layer
+class MainScene : public cocos2d::Layer
 {
 public:
+	string title = "Main";
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene();
 
@@ -13,7 +14,7 @@ public:
     virtual bool init();
     
     // implement the "static create()" method manually
-    CREATE_FUNC(Main);
+    CREATE_FUNC(MainScene);
 };
 
 #endif // __MAIN_SCENE_H__
