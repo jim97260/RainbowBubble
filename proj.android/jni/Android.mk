@@ -24,6 +24,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Scene/AboutScene.cpp \
                    ../../Classes/System/StageSystem.cpp \
                    ../../Classes/System/CharacterSystem.cpp \
+                    ../../Classes/System/BubbleSystem.cpp \
                    ../../Classes/System/ItemSystem.cpp \
                    ../../Classes/System/GameSystem.cpp \
                    ../../Classes/System/DataSystem.cpp

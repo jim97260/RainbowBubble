@@ -17,6 +17,7 @@
 // System Header
 #include "System\StageSystem.h"
 #include "System\CharacterSystem.h"
+#include "System\BubbleSystem.h"
 #include "System\ItemSystem.h"
 #include "System\GameSystem.h"
 #include "System\DataSystem.h"
@@ -27,3 +28,20 @@
 // Name Space
 using namespace std;
 USING_NS_CC;
+
+// Forward Declare
+class MainScene;
+class GameModeScene;
+class GameStageScene;
+class GameTimeScene;
+class GameResultScene;
+class GameGuildScene;
+class SettingScene;
+class RankScene;
+class AboutScene;
+class Stage;
+class Character;
+class Bubble;
+class Item;
+class Game;
+class Data;
