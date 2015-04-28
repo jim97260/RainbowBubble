@@ -29,6 +29,10 @@
 using namespace std;
 USING_NS_CC;
 
+#ifndef PI
+#define PI   3.1415926535897932385f
+#endif
+
 // Forward Declare
 class MainScene;
 class GameModeScene;

@@ -1,9 +1,11 @@
 #include "AllIncludeHeader.h"
 
 Point touchPosition = Point(0, 0);
-bool touchSwitch = false;
+bool touchBegin = false;
+bool touchMove = false;
 Point touchDelta = Point(0, 0);
 Size visibleSize;
+float tmpspd;
 
 Scene* MainScene::createScene()
 {
@@ -36,13 +38,13 @@ bool MainScene::init()
 
     player = new Character(this);
     player->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2));
-
+    player->showLine();
 
     auto listener1 = EventListenerTouchOneByOne::create();
     // trigger when you push down
     listener1->onTouchBegan = [](Touch* touch, Event* event){
         // your code
-    	touchSwitch = true;
+    	touchBegin = true;
     	touchPosition = touch->getLocation();
     	//log("[Touch Began] at point(%f, %f)\n", touch->getLocation().x, touch->getLocation().y);
         return true; // if you are consuming it
@@ -54,11 +56,13 @@ bool MainScene::init()
     	touchDelta = Point(touch->getLocation().x - touchPosition.x, touch->getLocation().y - touchPosition.y);
     	if (abs(touchDelta.x) > 10 || abs(touchDelta.y) > 10) {
     		log("%f, %f", touchDelta.x, touchDelta.y);
+    		touchMove = true;
     	}
     };
     // trigger when you let up
     listener1->onTouchEnded = [=](Touch* touch, Event* event){
-    	touchSwitch = false;
+    	touchBegin = false;
+    	touchMove = false;
     	touchPosition = Point(0, 0);
     	//log("[Touch Ended]\n");
 
@@ -71,26 +75,20 @@ bool MainScene::init()
 
     return true;
 }
-
 void MainScene::start(float delta)
 {
-	if (touchSwitch) {
-		Point p = player->getPosition();
-		p.x += (touchDelta.x / visibleSize.width) * 50;
-		p.y += (touchDelta.y / visibleSize.height) * 50;
-		if (p.x < 0) {
-			p.x = 0;
-		}
-		else if (p.x > visibleSize.width - 50) {
-			p.x = visibleSize.width - 50;
-		}
-		if (p.y < 0) {
-			p.y = 0;
-		}
-		else if (p.y > visibleSize.height - 50) {
-			p.y = visibleSize.height - 50;
-		}
-		player->setPosition(p);
+	if (touchMove) {
+		tmpspd += touchDelta.distance(touchPosition) / 50;
+		float newori = (touchDelta.x > 0)? (touchDelta.y > 0)? atan(touchDelta.y / touchDelta.x) : 2 * PI + atan(touchDelta.y / touchDelta.x) : atan(touchDelta.y / touchDelta.x) + PI;
+		player->setOrien(newori * 180 / PI);
 	}
+	else {
+		if (tmpspd > 0)
+				tmpspd -= delta * 1000;
+			else if (tmpspd < 0)
+				tmpspd = 0;
+	}
+	player->setSpeed(tmpspd);
+	player->showLine();
+	//log("[SPEED] %f\n", tmpspd);
 }
-

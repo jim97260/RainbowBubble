@@ -16,6 +16,7 @@ public :
 	Character();
 	Character(Layer*);
 	//Character(int, Point, float, float);
+	void showLine();
 /*
 	void attack();
 	void move();
@@ -37,6 +38,8 @@ public :
 	float getSpeed();
 private:
 	LayerColor*			_characterLayer;
+	Label* 					_characterLabel;
+	DrawNode*			_characterNode;
 	//Sprite*					_character;
 	int 						_characterType;			// 角色種類 0:玩家 1:敵人 2:障礙物
 	float					_characterOrien;			// 角色的移動方向 (0~360)

@@ -17,7 +17,6 @@ cocos2d::LayerColor* createLayerColorWithLabel(	cocos2d::Color4B color,
     lb->ignoreAnchorPointForPosition(false);
     lb->setAnchorPoint(lbanchor); // (0~1, 0~1)
     lb->setTextColor(lc);
-
     //nGameBackGroundLayer->getContentSize().width/2
 
     lb->setPosition(cocos2d::Point(ly->getContentSize().width / 2, ly->getContentSize().height / 2));
