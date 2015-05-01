@@ -40,6 +40,9 @@ bool MainScene::init()
     player->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2));
     player->showLine();
 
+    status = cocos2d::Label::createWithTTF("Stop", "fonts/Marker Felt.ttf", 50, visibleSize, cocos2d::TextHAlignment::CENTER, cocos2d::TextVAlignment::BOTTOM);
+    this->addChild(status, 20);
+
     auto listener1 = EventListenerTouchOneByOne::create();
     // trigger when you push down
     listener1->onTouchBegan = [](Touch* touch, Event* event){
@@ -57,6 +60,9 @@ bool MainScene::init()
     	if (abs(touchDelta.x) > 10 || abs(touchDelta.y) > 10) {
     		log("%f, %f", touchDelta.x, touchDelta.y);
     		touchMove = true;
+    	}
+    	else {
+    		touchMove = false;
     	}
     };
     // trigger when you let up
@@ -77,18 +83,16 @@ bool MainScene::init()
 }
 void MainScene::start(float delta)
 {
-	if (touchMove) {
-		tmpspd += touchDelta.distance(touchPosition) / 50;
-		float newori = (touchDelta.x > 0)? (touchDelta.y > 0)? atan(touchDelta.y / touchDelta.x) : 2 * PI + atan(touchDelta.y / touchDelta.x) : atan(touchDelta.y / touchDelta.x) + PI;
-		player->setOrien(newori * 180 / PI);
+	if (touchBegin) {
+		if (touchMove) {
+			player->setOrien(touchDelta);
+		}
+		player->upSpeed(delta);
 	}
 	else {
-		if (tmpspd > 0)
-				tmpspd -= delta * 1000;
-			else if (tmpspd < 0)
-				tmpspd = 0;
+		player->downSpeed(delta);
 	}
-	player->setSpeed(tmpspd);
+	player->move(delta);
 	player->showLine();
 	//log("[SPEED] %f\n", tmpspd);
 }
