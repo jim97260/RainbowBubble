@@ -93,6 +93,6 @@ void MainScene::start(float delta)
 		player->downSpeed(delta);
 	}
 	player->move(delta);
-	player->showLine();
+	//player->showLine();
 	//log("[SPEED] %f\n", tmpspd);
 }
